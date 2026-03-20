@@ -46,16 +46,10 @@ body.is-inverted{
 }
 
 *{ box-sizing: border-box; }
-img{
-  max-width: 100%;
-  height: auto;
-}
 html{
   height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  overflow-x: hidden;
-  max-width: 100%;
   animation: portfolio-ring-rotate var(--ring-rotate-duration) linear infinite;
 }
 @media (prefers-reduced-motion: reduce){
@@ -67,13 +61,10 @@ body{
   margin: 0;
   min-height: 100%;
   min-height: 100dvh;
-  width: 100%;
-  max-width: 100%;
   font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: var(--bg);
   color: var(--fg);
   overflow-x: hidden;
-  overscroll-behavior-x: none;
 }
 
 /* Запрет выделения текста; исключение — только блоки почты и Telegram на contact.html */
@@ -103,8 +94,7 @@ body{
 @media (max-width: 860px){
   .container{
     width: 100%;
-    max-width: 100%;
-    min-width: 0;
+    max-width: var(--maxw);
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
     box-sizing: border-box;
@@ -152,15 +142,6 @@ body:not(.is-splashing) .bg-grain{
   }
   100%{
     transform: translate3d(0,0,0) scale(1.01) rotate(0deg);
-  }
-}
-/* Узкие экраны: без крупного scale — иначе «зерно» раздувает горизонтальный скролл */
-@keyframes bgDriftMobile{
-  0%, 100%{
-    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-  }
-  50%{
-    transform: translate3d(0.5%, -0.4%, 0) scale(1.006) rotate(.04deg);
   }
 }
 /* Тёмная тема: почти ровный чёрный + лёгкое мягкое свечение по центру (как референс) */
@@ -897,8 +878,7 @@ body.is-inverted .stat{
     grid-template-rows: auto auto;
     gap: 12px 10px;
     align-items: center;
-    overflow-x: clip;
-    overflow-y: visible;
+    overflow-x: visible;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -942,14 +922,15 @@ body.is-inverted .stat{
     max-width: none;
     width: auto;
   }
-  /* 4 равные колонки; вкладка по ширине текста; без overflow:hidden — иначе WebKit ломает скролл страницы */
   .nav{
     grid-column: 1 / -1;
     grid-row: 2;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    align-items: center;
-    justify-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    gap: 2px 6px;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -958,103 +939,38 @@ body.is-inverted .stat{
     margin: 0;
   }
   .nav .nav__link{
-    grid-column: auto;
+    flex: 1 1 0%;
+    flex-basis: 0;
     min-width: 0;
-    width: max-content;
     max-width: 100%;
+    width: 0;
     min-height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 8px;
-    box-sizing: border-box;
-    font-size: clamp(11px, 3vw, 14px);
+    padding: 8px 2px;
+    font-size: clamp(10px, 3.15vw, 13px);
     font-weight: 500;
-    letter-spacing: -0.02em;
     text-align: center;
-    line-height: 1.2;
+    line-height: 1.15;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     hyphens: none;
     overflow-wrap: normal;
-    word-break: keep-all;
   }
-  /* Активная в нижнем ряду — как «Главная»/«Обо мне»: тот же кегль и высота, без бегущего кольца (оно обрезалось и портило вид) */
+  /* Активная вкладка: тот же метрический вес текста, чтобы ширина/переносы совпадали с соседями */
   .nav .nav__link[aria-current="page"]{
     font-weight: 500;
-    min-height: 44px;
-    padding: 8px 10px;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: blur(14px) saturate(1.25);
-    backdrop-filter: blur(14px) saturate(1.25);
-  }
-  body.is-inverted .nav .nav__link[aria-current="page"]{
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: none !important;
-  }
-  body.is-inverted .nav .nav__link[aria-current="page"]:hover{
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(255, 255, 255, 0.48);
-    box-shadow: none !important;
-  }
-  body:not(.is-inverted) .nav .nav__link[aria-current="page"]{
-    background: rgba(255, 255, 255, 0.96);
-    border-color: rgba(0, 0, 0, 0.14);
-    box-shadow: none !important;
-  }
-  body:not(.is-inverted) .nav .nav__link[aria-current="page"]:hover{
-    background: #fff;
-    border-color: rgba(0, 0, 0, 0.2);
-    box-shadow: none !important;
-  }
-  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
-    .nav .nav__link[aria-current="page"]{
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
-    body.is-inverted .nav .nav__link[aria-current="page"]{
-      background: rgba(255, 255, 255, 0.14);
-    }
-    body:not(.is-inverted) .nav .nav__link[aria-current="page"]{
-      background: rgba(255, 255, 255, 0.98);
-    }
-  }
-  .nav .nav__link[aria-current="page"]::before,
-  .nav .nav__link[aria-current="page"]::after{
-    content: none !important;
-    display: none !important;
-  }
-  /* Не даём фону и контенту вылезать за ширину экрана */
-  .bg-grain{
-    inset: 0;
-  }
-  body:not(.is-splashing) .bg-grain{
-    animation: bgDriftMobile 4.8s var(--ease) infinite;
-  }
-  /* Не использовать overflow-x:hidden на main/section — в Safari это ломает вертикальный скролл документа; горизонталь режут html/body */
-  .page{
-    overflow: visible;
-    max-width: 100%;
-    padding-top: max(118px, calc(92px + env(safe-area-inset-top, 0px)));
-  }
-  .section{
-    overflow: visible;
-    max-width: 100%;
-  }
-  .projectsGrid{
-    min-width: 0;
-    width: 100%;
-  }
-  .projectCard{
-    min-width: 0;
-    max-width: 100%;
-    box-sizing: border-box;
   }
   .btn--ghost{
     min-height: 44px;
     padding: 10px 16px;
   }
   /* двухрядная шапка (аватар + меню в один скролл-ряд) */
+  .page{
+    padding-top: max(118px, calc(92px + env(safe-area-inset-top, 0px)));
+  }
   .page--home{
     padding-bottom: max(28px, env(safe-area-inset-bottom, 0px));
   }
@@ -1070,13 +986,6 @@ body.is-inverted .stat{
   /* без горизонтального вылезания фона hero (иногда сдвигает весь холст на мобилке) */
   .page--home .hero{
     overflow-x: hidden;
-  }
-  .hero__back{
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100%;
-    top: 0;
   }
   .hero__kicker{
     flex-wrap: wrap;
