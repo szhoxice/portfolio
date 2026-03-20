@@ -930,13 +930,20 @@ body.is-inverted .stat{
     flex-wrap: nowrap;
     justify-content: space-evenly;
     align-items: stretch;
-    gap: 2px 6px;
+    gap: 2px 4px;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow: visible;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
     padding: 4px 0 10px;
     margin: 0;
+  }
+  .nav::-webkit-scrollbar{
+    display: none;
   }
   .nav .nav__link{
     flex: 1 1 0;
@@ -946,12 +953,26 @@ body.is-inverted .stat{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 4px;
-    font-size: clamp(11px, 3.4vw, 14px);
+    padding: 8px 2px;
+    font-size: clamp(10px, 3.1vw, 13px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
     text-align: center;
-    line-height: 1.2;
-    hyphens: auto;
-    overflow-wrap: anywhere;
+    line-height: 1.15;
+    white-space: nowrap;
+    hyphens: none;
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+  /* Активная вкладка: тот же кегль и начертание, что у соседей — иначе «Проекты» и др. визуально «прыгают» */
+  .nav .nav__link[aria-current="page"]{
+    font-weight: 500;
+  }
+  /* Бегущая кромка у вкладок чуть ближе к pill, чтобы не казалось, что одна кнопка крупнее */
+  .nav .nav__link[aria-current="page"]::before,
+  .nav .nav__link[aria-current="page"]::after{
+    inset: -1px;
+    padding: 1px;
   }
   .btn--ghost{
     min-height: 44px;
