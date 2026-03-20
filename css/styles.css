@@ -50,6 +50,10 @@ html{
   height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Без горизонтального «уползания» при зуме и полосе прокрутки */
+  overflow-x: hidden;
+  max-width: 100%;
+  scrollbar-gutter: stable;
   animation: portfolio-ring-rotate var(--ring-rotate-duration) linear infinite;
 }
 @media (prefers-reduced-motion: reduce){
@@ -343,7 +347,7 @@ body.is-inverted .topbar{
   display: block;
   width: 48px;
   height: 48px;
-  /* десктоп: отступ как настроено; планшет/телефон — ниже в media */
+  /* мобильные переопределяют в @media (max-width: 860px); десктоп — ниже */
   margin-inline-start: clamp(12px, 4vw, 32px);
   border-radius: 50%;
   flex-shrink: 0;
@@ -604,9 +608,16 @@ body:not(.is-inverted) .contactLink::before{
   flex-shrink: 0;
 }
 
-@media (min-width: 1200px){
+/* Десктоп: аватар на одной вертикали с левым краем .container (без фикс. px — стабильно при масштабе браузера) */
+@media (min-width: 861px){
   .topbar__home{
-    margin-inline-start: 810px;
+    margin-inline-start: max(
+      clamp(12px, 4vw, 32px),
+      calc(
+        (100vw - min(var(--maxw), calc(100vw - 40px))) / 2
+        - max(20px, env(safe-area-inset-left, 0px))
+      )
+    );
   }
 }
 
