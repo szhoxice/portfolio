@@ -1,5 +1,22 @@
+/* Бегущая обводка: угол крутится здесь (не в JS), чтобы скорость не «залипала» из кэша app.js */
+@property --nav-ring-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: true;
+}
+@keyframes portfolio-ring-rotate {
+  from {
+    --nav-ring-angle: 0deg;
+  }
+  to {
+    --nav-ring-angle: 360deg;
+  }
+}
+
 :root{
   color-scheme: light;
+  /* Период полного оборота блика по кромке (меняй здесь) */
+  --ring-rotate-duration: 16s;
   --bg: #eef0f4;
   --fg: #0a0a0c;
   --muted: rgba(10, 10, 12, 0.64);
@@ -33,6 +50,12 @@ html{
   height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  animation: portfolio-ring-rotate var(--ring-rotate-duration) linear infinite;
+}
+@media (prefers-reduced-motion: reduce){
+  html{
+    animation: none;
+  }
 }
 body{
   margin: 0;
@@ -459,7 +482,7 @@ body:not(.is-inverted) .nav__link[aria-current="page"]:hover{
   }
 }
 
-/* Белая вращающаяся кромка: только активная вкладка в шапке + метрики + карточки (угол — --nav-ring-angle, app.js) */
+/* Белая вращающаяся кромка: активная вкладка + метрики + карточки (угол — --nav-ring-angle, анимация на html) */
 .nav__link[aria-current="page"]::after,
 .stat::after,
 .card::after,

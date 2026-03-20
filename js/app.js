@@ -26,25 +26,10 @@
     }
   }
 
+  /** Вращение бегущей обводки: см. CSS (--ring-rotate-duration, @keyframes portfolio-ring-rotate). */
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
-
-  /** Белая вращающаяся обводка: меню, метрики, карточки разделов (общий угол --nav-ring-angle на :root). */
-  if (!prefersReducedMotion) {
-    /** Период полного оборота бегущей обводки (мс): больше — медленнее */
-    const RING_MS = 16000;
-    const t0 = performance.now();
-    function tickRingAngle(now) {
-      const phase = ((now - t0) % RING_MS) / RING_MS;
-      document.documentElement.style.setProperty(
-        "--nav-ring-angle",
-        `${phase * 360}deg`
-      );
-      requestAnimationFrame(tickRingAngle);
-    }
-    requestAnimationFrame(tickRingAngle);
-  }
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
