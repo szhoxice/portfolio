@@ -616,6 +616,7 @@ body:not(.is-inverted) .contactLink::before{
       calc(
         (100vw - min(var(--maxw), calc(100vw - 40px))) / 2
         - max(20px, env(safe-area-inset-left, 0px))
+        + 52px
       )
     );
   }
