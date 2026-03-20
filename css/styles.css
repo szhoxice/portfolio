@@ -329,6 +329,11 @@ body.is-inverted .topbar{
 }
 .topbar .container{ display: contents; }
 
+/* Лого + меню одной группой (десктоп flex); на мобилке display:contents — сетка шапки без изменений */
+.topbar__start{
+  min-width: 0;
+}
+
 /* Центральная зона: «Главная» + ряд разделов (на десктопе в одну линию) */
 .topbar__mid{
   grid-column: 2;
@@ -610,9 +615,21 @@ body:not(.is-inverted) .contactLink::before{
   flex-shrink: 0;
 }
 
-/* Десктоп: базовое выравнивание + --topbar-logo-extra (сумма снаружи max — сдвиг всегда виден) */
+/* Десктоп: flex вместо 1fr/auto/1fr — ширина меню не сдвигает блок относительно лого на разных вкладках */
 @media (min-width: 861px){
-  .topbar__home{
+  .topbar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .topbar__start{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    flex: 0 1 auto;
     margin-inline-start: calc(
       max(
         clamp(12px, 4vw, 32px),
@@ -621,6 +638,15 @@ body:not(.is-inverted) .contactLink::before{
       )
       + var(--topbar-logo-extra, 0px)
     );
+  }
+  .topbar__home{
+    margin-inline-start: 0;
+  }
+  .topbar__mid{
+    justify-content: flex-start;
+  }
+  .topbar__actions{
+    margin-inline-start: auto;
   }
 }
 
@@ -886,6 +912,9 @@ body.is-inverted .stat{
 
 /* Responsive adjustments */
 @media (max-width: 860px){
+  .topbar__start{
+    display: contents;
+  }
   /* Ряд 1: аватар | «Главная» по центру | Ч/Б; ряд 2: 4 раздела на всю ширину */
   .topbar{
     grid-template-columns: auto minmax(0, 1fr) auto;
