@@ -105,7 +105,7 @@
           "Доработки по обратной связи: рейтинг волонтёров, верификация и уточнения по заявкам"
         ],
         demoLink: "https://t.me/HelpOnWheels_bot",
-        coverImage: "../assets/images/how.jpg"
+        coverImage: "assets/images/how.jpg"
       },
       {
         title: "МДПС Verify",
@@ -119,7 +119,7 @@
           "Аудитория «в теме»: сначала канал, потом беседа — без лишнего шума в чате"
         ],
         demoLink: "https://t.me/mdps_kapcha_bot",
-        coverImage: "../assets/images/mdps.jpg"
+        coverImage: "assets/images/mdps.jpg"
       },
       {
         title: "Сайты на заказ",
@@ -133,7 +133,7 @@
           "Готовность поддерживать и дорабатывать после запуска"
         ],
         demoLink: "https://t.me/szhoxice",
-        coverImage: "../assets/images/sait.jpg"
+        coverImage: "assets/images/sait.jpg"
       }
     ],
     skills: [
@@ -451,8 +451,8 @@
       splashImg.alt = "";
       const inverted = document.body.classList.contains("is-inverted");
       splashImg.src = inverted
-        ? "../assets/images/david.jpg"
-        : "../assets/images/david1.jpg";
+        ? "assets/images/david.jpg"
+        : "assets/images/david1.jpg";
 
       if (inverted) {
         document.body.classList.add("is-splashing");
