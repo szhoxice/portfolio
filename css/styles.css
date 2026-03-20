@@ -1479,6 +1479,13 @@ body.is-inverted .contactLink:hover{
   transform: translate3d(0, 0, 0);
 }
 
+/* Шапка без reveal: одинаковое положение лого и меню на главной и на всех вкладках */
+.topbar[data-animate="fade"]{
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
 /* Split title animation (главная hero + .split-heading на подстраницах) */
 .hero__title[data-animate="split"],
 .split-heading[data-animate="split"]{
