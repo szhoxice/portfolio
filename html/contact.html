@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Контакты — Давид Миралиев</title>
+    <meta name="description" content="Связаться с Давидом Миралиевым: сайт на заказ, боты, коллаборации." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=IBM+Plex+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body class="is-inverted">
+    <div class="bg-grain" aria-hidden="true"></div>
+    <canvas id="bgParticles" class="bg-particles" aria-hidden="true"></canvas>
+    <div class="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__ring"></div>
+    </div>
+
+    <header class="topbar" data-animate="fade">
+      <a class="topbar__home" href="index.html" aria-label="На главную" data-cursor-link>
+        <img class="topbar__home-img" src="../assets/images/david.jpg" alt="" width="48" height="48" decoding="async" />
+      </a>
+      <div class="topbar__mid">
+        <a class="nav__link nav__link--home" href="index.html" data-cursor-link>Главная</a>
+        <nav class="nav" aria-label="Разделы сайта">
+          <a class="nav__link" href="about.html" data-cursor-link>Обо мне</a>
+          <a class="nav__link" href="projects.html" data-cursor-link>Проекты</a>
+          <a class="nav__link" href="skills.html" data-cursor-link>Навыки</a>
+          <a class="nav__link" href="contact.html" aria-current="page" data-cursor-link>Контакты</a>
+        </nav>
+      </div>
+      <div class="topbar__actions">
+        <button class="btn btn--ghost" type="button" id="themeToggle" aria-label="Инвертировать тему">
+          <span class="btn__label">Ч/Б</span>
+          <span class="btn__hint">инверсия</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page page--sub">
+      <section class="section section--dark section--first">
+        <div class="container contact contact--solo">
+          <div class="contact__left" data-animate="reveal">
+            <h1 class="h2 h2--invert">Контакты</h1>
+            <p class="lead lead--invert">
+              Хочешь сайт, обсудить бота или просто поздороваться — напиши на почту или в Telegram.
+            </p>
+            <div class="contact__links">
+              <a
+                class="contactLink"
+                href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=miralievdavid69%40gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Написать письмо на miralievdavid69@gmail.com в Gmail"
+                data-cursor-link
+              >
+                <span class="contactLink__key mono">email</span>
+                <span class="contactLink__value">miralievdavid69@gmail.com</span>
+              </a>
+              <a class="contactLink" href="#" target="_blank" rel="noopener noreferrer" data-cursor-link>
+                <span class="contactLink__key mono">telegram</span>
+                <span class="contactLink__value">@szhoxice</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer footer--page" data-animate="fade">
+        <div class="container footer__inner footer__inner--center">
+          <p class="footer__copyright mono mono--muted">
+            © 2026 Портфолио - Студента последнего курса Миралиева Давида
+          </p>
+        </div>
+      </footer>
+    </main>
+    <script src="../js/app.js"></script>
+    <script src="../js/particles-bg.js"></script>
+  </body>
+</html>
