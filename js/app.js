@@ -32,7 +32,8 @@
 
   /** Белая вращающаяся обводка: меню, метрики, карточки разделов (общий угол --nav-ring-angle на :root). */
   if (!prefersReducedMotion) {
-    const RING_MS = 1800;
+    /** Период полного оборота бегущей обводки (мс): больше — медленнее */
+    const RING_MS = 5600;
     const t0 = performance.now();
     function tickRingAngle(now) {
       const phase = ((now - t0) % RING_MS) / RING_MS;
