@@ -44,6 +44,20 @@ body{
   overflow-x: hidden;
 }
 
+/* Запрет выделения текста; исключение — только блоки почты и Telegram на contact.html */
+html,
+body{
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.contact__links .contactLink,
+.contact__links .contactLink *{
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
 .mono{
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   letter-spacing: .02em;
