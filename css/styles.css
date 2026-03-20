@@ -46,10 +46,16 @@ body.is-inverted{
 }
 
 *{ box-sizing: border-box; }
+img{
+  max-width: 100%;
+  height: auto;
+}
 html{
   height: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
   animation: portfolio-ring-rotate var(--ring-rotate-duration) linear infinite;
 }
 @media (prefers-reduced-motion: reduce){
@@ -61,10 +67,13 @@ body{
   margin: 0;
   min-height: 100%;
   min-height: 100dvh;
+  width: 100%;
+  max-width: 100%;
   font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: var(--bg);
   color: var(--fg);
   overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 /* Запрет выделения текста; исключение — только блоки почты и Telegram на contact.html */
@@ -94,7 +103,8 @@ body{
 @media (max-width: 860px){
   .container{
     width: 100%;
-    max-width: var(--maxw);
+    max-width: 100%;
+    min-width: 0;
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
     box-sizing: border-box;
@@ -142,6 +152,15 @@ body:not(.is-splashing) .bg-grain{
   }
   100%{
     transform: translate3d(0,0,0) scale(1.01) rotate(0deg);
+  }
+}
+/* Узкие экраны: без крупного scale — иначе «зерно» раздувает горизонтальный скролл */
+@keyframes bgDriftMobile{
+  0%, 100%{
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  50%{
+    transform: translate3d(0.5%, -0.4%, 0) scale(1.006) rotate(.04deg);
   }
 }
 /* Тёмная тема: почти ровный чёрный + лёгкое мягкое свечение по центру (как референс) */
@@ -878,7 +897,7 @@ body.is-inverted .stat{
     grid-template-rows: auto auto;
     gap: 12px 10px;
     align-items: center;
-    overflow-x: visible;
+    overflow-x: hidden;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -927,28 +946,22 @@ body.is-inverted .stat{
     grid-row: 2;
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    gap: 2px 4px;
+    gap: 4px 6px;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
     padding: 4px 0 10px;
     margin: 0;
   }
-  .nav::-webkit-scrollbar{
-    display: none;
-  }
   .nav .nav__link{
-    flex: 1 1 0;
+    flex: 0 1 auto;
     min-width: 0;
-    max-width: 100%;
+    max-width: none;
     min-height: 40px;
     display: inline-flex;
     align-items: center;
@@ -1018,14 +1031,36 @@ body.is-inverted .stat{
   body:not(.is-inverted) .nav .nav__link[aria-current="page"]::after{
     background: rgba(0, 0, 0, 0.04);
   }
+  /* Не даём фону и контенту вылезать за ширину экрана */
+  .bg-grain{
+    inset: 0;
+  }
+  body:not(.is-splashing) .bg-grain{
+    animation: bgDriftMobile 4.8s var(--ease) infinite;
+  }
+  .page{
+    overflow-x: hidden;
+    max-width: 100%;
+    padding-top: max(118px, calc(92px + env(safe-area-inset-top, 0px)));
+  }
+  .section{
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+  .projectsGrid{
+    min-width: 0;
+    width: 100%;
+  }
+  .projectCard{
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
   .btn--ghost{
     min-height: 44px;
     padding: 10px 16px;
   }
   /* двухрядная шапка (аватар + меню в один скролл-ряд) */
-  .page{
-    padding-top: max(118px, calc(92px + env(safe-area-inset-top, 0px)));
-  }
   .page--home{
     padding-bottom: max(28px, env(safe-area-inset-bottom, 0px));
   }
@@ -1041,6 +1076,13 @@ body.is-inverted .stat{
   /* без горизонтального вылезания фона hero (иногда сдвигает весь холст на мобилке) */
   .page--home .hero{
     overflow-x: hidden;
+  }
+  .hero__back{
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    top: 0;
   }
   .hero__kicker{
     flex-wrap: wrap;
