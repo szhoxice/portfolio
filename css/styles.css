@@ -939,29 +939,19 @@ body.is-inverted .stat{
     margin: 0;
   }
   .nav .nav__link{
-    flex: 1 1 0%;
-    flex-basis: 0;
+    flex: 1 1 0;
     min-width: 0;
     max-width: 100%;
-    width: 0;
     min-height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 2px;
-    font-size: clamp(10px, 3.15vw, 13px);
-    font-weight: 500;
+    padding: 8px 4px;
+    font-size: clamp(11px, 3.4vw, 14px);
     text-align: center;
-    line-height: 1.15;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    hyphens: none;
-    overflow-wrap: normal;
-  }
-  /* Активная вкладка: тот же метрический вес текста, чтобы ширина/переносы совпадали с соседями */
-  .nav .nav__link[aria-current="page"]{
-    font-weight: 500;
+    line-height: 1.2;
+    hyphens: auto;
+    overflow-wrap: anywhere;
   }
   .btn--ghost{
     min-height: 44px;
