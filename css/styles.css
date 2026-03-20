@@ -30,6 +30,8 @@
   --ease: cubic-bezier(.2,.85,.25,1);
   --ease2: cubic-bezier(.25,1,.33,1);
   --maxw: 1120px;
+  /* Доп. сдвиг лого вправо на ПК (десктоп); меняй здесь — всегда суммируется к позиции */
+  --topbar-logo-extra: 160px;
 }
 
 /* Инверсия темы */
@@ -608,16 +610,16 @@ body:not(.is-inverted) .contactLink::before{
   flex-shrink: 0;
 }
 
-/* Десктоп: аватар на одной вертикали с левым краем .container (без фикс. px — стабильно при масштабе браузера) */
+/* Десктоп: базовое выравнивание + --topbar-logo-extra (сумма снаружи max — сдвиг всегда виден) */
 @media (min-width: 861px){
   .topbar__home{
-    margin-inline-start: max(
-      clamp(12px, 4vw, 32px),
-      calc(
+    margin-inline-start: calc(
+      max(
+        clamp(12px, 4vw, 32px),
         (100vw - min(var(--maxw), calc(100vw - 40px))) / 2
-        - max(20px, env(safe-area-inset-left, 0px))
-        + 52px
+          - max(20px, env(safe-area-inset-left, 0px))
       )
+      + var(--topbar-logo-extra, 0px)
     );
   }
 }
