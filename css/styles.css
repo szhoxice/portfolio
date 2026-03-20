@@ -316,6 +316,7 @@ body.is-inverted .cursor__ring{
   backdrop-filter: blur(10px);
   background: rgba(255,255,255,.55);
   border-bottom: 1px solid rgba(0,0,0,.06);
+  touch-action: manipulation;
 }
 body:not(.is-inverted) .topbar{
   background: rgba(255, 255, 255, 0.82);
@@ -941,15 +942,14 @@ body.is-inverted .stat{
     max-width: none;
     width: auto;
   }
+  /* 4 равные колонки; ссылка по центру и только по ширине текста — pill не растягивается на всю ячейку */
   .nav{
     grid-column: 1 / -1;
     grid-row: 2;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     align-items: center;
-    gap: 4px 6px;
+    justify-items: center;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -957,17 +957,20 @@ body.is-inverted .stat{
     overflow-y: visible;
     padding: 4px 0 10px;
     margin: 0;
+    touch-action: manipulation;
   }
   .nav .nav__link{
-    flex: 0 1 auto;
+    grid-column: auto;
     min-width: 0;
-    max-width: none;
+    width: max-content;
+    max-width: 100%;
     min-height: 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 2px;
-    font-size: clamp(10px, 3.1vw, 13px);
+    padding: 4px 5px;
+    box-sizing: border-box;
+    font-size: clamp(10px, 2.75vw, 12px);
     font-weight: 500;
     letter-spacing: -0.02em;
     text-align: center;
@@ -976,13 +979,13 @@ body.is-inverted .stat{
     hyphens: none;
     overflow-wrap: normal;
     word-break: keep-all;
+    touch-action: manipulation;
   }
-  /* Активная вкладка: компактный pill как у соседей — без «лишнего» тёмного стекла и теней */
+  /* Активная: те же отступы и высота, что у соседей — только обводка/фон вокруг текста */
   .nav .nav__link[aria-current="page"]{
     font-weight: 500;
-    min-height: auto;
-    padding: 3px 5px;
-    align-self: center;
+    min-height: 40px;
+    padding: 4px 5px;
     box-shadow: none !important;
     -webkit-backdrop-filter: blur(10px) saturate(1.15);
     backdrop-filter: blur(10px) saturate(1.15);
