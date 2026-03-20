@@ -1,7 +1,6 @@
 ---
 description: После правок сайта — коммит и push на GitHub для обновления Pages
-globs: "**/*.{html,css,js,md}"
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Деплой на GitHub Pages
