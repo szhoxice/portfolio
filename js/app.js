@@ -576,17 +576,6 @@
 
   let activeProject = null;
 
-  /* Возврат из bfcache / сбой: не оставлять body overflow:hidden без открытой модалки */
-  window.addEventListener(
-    "pageshow",
-    () => {
-      if (modal && !modal.classList.contains("is-open")) {
-        document.body.style.overflow = "";
-      }
-    },
-    { passive: true }
-  );
-
   function setModalOpen(open) {
     if (!modal) return;
     modal.classList.toggle("is-open", open);
