@@ -316,7 +316,6 @@ body.is-inverted .cursor__ring{
   backdrop-filter: blur(10px);
   background: rgba(255,255,255,.55);
   border-bottom: 1px solid rgba(0,0,0,.06);
-  touch-action: manipulation;
 }
 body:not(.is-inverted) .topbar{
   background: rgba(255, 255, 255, 0.82);
@@ -898,7 +897,8 @@ body.is-inverted .stat{
     grid-template-rows: auto auto;
     gap: 12px 10px;
     align-items: center;
-    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -942,7 +942,7 @@ body.is-inverted .stat{
     max-width: none;
     width: auto;
   }
-  /* 4 равные колонки; ссылка по центру и только по ширине текста — pill не растягивается на всю ячейку */
+  /* 4 равные колонки; вкладка по ширине текста; без overflow:hidden — иначе WebKit ломает скролл страницы */
   .nav{
     grid-column: 1 / -1;
     grid-row: 2;
@@ -953,24 +953,22 @@ body.is-inverted .stat{
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    overflow-x: hidden;
-    overflow-y: visible;
+    overflow: visible;
     padding: 4px 0 10px;
     margin: 0;
-    touch-action: manipulation;
   }
   .nav .nav__link{
     grid-column: auto;
     min-width: 0;
     width: max-content;
     max-width: 100%;
-    min-height: 40px;
+    min-height: 44px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 5px;
+    padding: 6px 8px;
     box-sizing: border-box;
-    font-size: clamp(10px, 2.75vw, 12px);
+    font-size: clamp(11px, 3vw, 14px);
     font-weight: 500;
     letter-spacing: -0.02em;
     text-align: center;
@@ -979,35 +977,34 @@ body.is-inverted .stat{
     hyphens: none;
     overflow-wrap: normal;
     word-break: keep-all;
-    touch-action: manipulation;
   }
-  /* Активная: те же отступы и высота, что у соседей — только обводка/фон вокруг текста */
+  /* Активная в нижнем ряду — как «Главная»/«Обо мне»: тот же кегль и высота, без бегущего кольца (оно обрезалось и портило вид) */
   .nav .nav__link[aria-current="page"]{
     font-weight: 500;
-    min-height: 40px;
-    padding: 4px 5px;
+    min-height: 44px;
+    padding: 8px 10px;
     box-shadow: none !important;
-    -webkit-backdrop-filter: blur(10px) saturate(1.15);
-    backdrop-filter: blur(10px) saturate(1.15);
+    -webkit-backdrop-filter: blur(14px) saturate(1.25);
+    backdrop-filter: blur(14px) saturate(1.25);
   }
   body.is-inverted .nav .nav__link[aria-current="page"]{
-    background: rgba(255, 255, 255, 0.09);
-    border-color: rgba(255, 255, 255, 0.34);
-    box-shadow: none !important;
-  }
-  body.is-inverted .nav .nav__link[aria-current="page"]:hover{
     background: rgba(255, 255, 255, 0.12);
     border-color: rgba(255, 255, 255, 0.4);
     box-shadow: none !important;
   }
+  body.is-inverted .nav .nav__link[aria-current="page"]:hover{
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.48);
+    box-shadow: none !important;
+  }
   body:not(.is-inverted) .nav .nav__link[aria-current="page"]{
-    background: rgba(255, 255, 255, 0.94);
-    border-color: rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.96);
+    border-color: rgba(0, 0, 0, 0.14);
     box-shadow: none !important;
   }
   body:not(.is-inverted) .nav .nav__link[aria-current="page"]:hover{
     background: #fff;
-    border-color: rgba(0, 0, 0, 0.16);
+    border-color: rgba(0, 0, 0, 0.2);
     box-shadow: none !important;
   }
   @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
@@ -1016,23 +1013,16 @@ body.is-inverted .stat{
       backdrop-filter: none;
     }
     body.is-inverted .nav .nav__link[aria-current="page"]{
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.14);
     }
     body:not(.is-inverted) .nav .nav__link[aria-current="page"]{
       background: rgba(255, 255, 255, 0.98);
     }
   }
-  /* Бегущая кромка без «обода» шире текста */
   .nav .nav__link[aria-current="page"]::before,
   .nav .nav__link[aria-current="page"]::after{
-    inset: 0;
-    padding: 1px;
-  }
-  body.is-inverted .nav .nav__link[aria-current="page"]::after{
-    background: rgba(255, 255, 255, 0.05);
-  }
-  body:not(.is-inverted) .nav .nav__link[aria-current="page"]::after{
-    background: rgba(0, 0, 0, 0.04);
+    content: none !important;
+    display: none !important;
   }
   /* Не даём фону и контенту вылезать за ширину экрана */
   .bg-grain{
@@ -1041,13 +1031,14 @@ body.is-inverted .stat{
   body:not(.is-splashing) .bg-grain{
     animation: bgDriftMobile 4.8s var(--ease) infinite;
   }
+  /* Не использовать overflow-x:hidden на main/section — в Safari это ломает вертикальный скролл документа; горизонталь режут html/body */
   .page{
-    overflow-x: hidden;
+    overflow: visible;
     max-width: 100%;
     padding-top: max(118px, calc(92px + env(safe-area-inset-top, 0px)));
   }
   .section{
-    overflow-x: hidden;
+    overflow: visible;
     max-width: 100%;
   }
   .projectsGrid{
