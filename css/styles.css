@@ -929,7 +929,7 @@ body.is-inverted .stat{
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-evenly;
-    align-items: stretch;
+    align-items: center;
     gap: 2px 4px;
     width: 100%;
     max-width: 100%;
@@ -949,30 +949,74 @@ body.is-inverted .stat{
     flex: 1 1 0;
     min-width: 0;
     max-width: 100%;
-    min-height: 44px;
+    min-height: 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 2px;
+    padding: 4px 2px;
     font-size: clamp(10px, 3.1vw, 13px);
     font-weight: 500;
     letter-spacing: -0.02em;
     text-align: center;
-    line-height: 1.15;
+    line-height: 1.2;
     white-space: nowrap;
     hyphens: none;
     overflow-wrap: normal;
     word-break: keep-all;
   }
-  /* Активная вкладка: тот же кегль и начертание, что у соседей — иначе «Проекты» и др. визуально «прыгают» */
+  /* Активная вкладка: компактный pill как у соседей — без «лишнего» тёмного стекла и теней */
   .nav .nav__link[aria-current="page"]{
     font-weight: 500;
+    min-height: auto;
+    padding: 3px 5px;
+    align-self: center;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: blur(10px) saturate(1.15);
+    backdrop-filter: blur(10px) saturate(1.15);
   }
-  /* Бегущая кромка у вкладок чуть ближе к pill, чтобы не казалось, что одна кнопка крупнее */
+  body.is-inverted .nav .nav__link[aria-current="page"]{
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.34);
+    box-shadow: none !important;
+  }
+  body.is-inverted .nav .nav__link[aria-current="page"]:hover{
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: none !important;
+  }
+  body:not(.is-inverted) .nav .nav__link[aria-current="page"]{
+    background: rgba(255, 255, 255, 0.94);
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: none !important;
+  }
+  body:not(.is-inverted) .nav .nav__link[aria-current="page"]:hover{
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.16);
+    box-shadow: none !important;
+  }
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
+    .nav .nav__link[aria-current="page"]{
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    body.is-inverted .nav .nav__link[aria-current="page"]{
+      background: rgba(255, 255, 255, 0.12);
+    }
+    body:not(.is-inverted) .nav .nav__link[aria-current="page"]{
+      background: rgba(255, 255, 255, 0.98);
+    }
+  }
+  /* Бегущая кромка без «обода» шире текста */
   .nav .nav__link[aria-current="page"]::before,
   .nav .nav__link[aria-current="page"]::after{
-    inset: -1px;
+    inset: 0;
     padding: 1px;
+  }
+  body.is-inverted .nav .nav__link[aria-current="page"]::after{
+    background: rgba(255, 255, 255, 0.05);
+  }
+  body:not(.is-inverted) .nav .nav__link[aria-current="page"]::after{
+    background: rgba(0, 0, 0, 0.04);
   }
   .btn--ghost{
     min-height: 44px;
