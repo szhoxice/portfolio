@@ -31,7 +31,7 @@
   --ease2: cubic-bezier(.25,1,.33,1);
   --maxw: 1120px;
   /* Доп. сдвиг лого вправо на ПК (десктоп) */
-  --topbar-logo-extra: 270px;
+  --topbar-logo-extra: 360px;
 }
 
 /* Инверсия темы */
